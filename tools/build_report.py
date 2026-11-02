@@ -28,7 +28,7 @@ items = [
     ('08-add-success', 'Add Book form — success', 'Book added is shown after the new book is saved.'),
     ('14-genre-filter', 'Filters and search — genre filter', 'Selecting Fiction limits the visible books to that genre.'),
     ('15-status-filter', 'Filters and search — status filter', 'Reading combines with the genre filter.'),
-    ('16-favorites-filter', 'Filters and search — favorites only', 'Only matching favorite books remain visible.'),
+    ('16-favorites-filter', 'Filters and search — favorites only', 'With Fiction and All statuses selected, Favorites only reduces the matching set from three books to two.'),
     ('17-search', 'Filters and search — search', 'The title search combines with all active filters and ignores surrounding spaces.'),
     ('18-summary', 'Summary', 'Books and Favorites counts and the status breakdown describe the books currently shown.'),
     ('09-detail-view', 'Detail screen — view mode', 'Title, author, genre, status, rating and notes are displayed.'),
