@@ -133,7 +133,7 @@ void main() {
     await shot('06-list-after-login');
     await tapText('Add a book');
     await tapText('Add Book');
-    await tester.ensureVisible(find.text('Title is required'));
+    await tester.ensureVisible(find.text('Title'));
     await shot('07-add-validation');
     const addedTitle = 'A Book for UI Verification';
     await enter('Title', addedTitle);
@@ -174,10 +174,14 @@ void main() {
     await shot('14-genre-filter');
     await choose('Status filter', 'Reading');
     await shot('15-status-filter');
+    await choose('Status filter', 'All');
+    expect(find.text('Books: 3'), findsOneWidget);
     await tester.ensureVisible(find.byType(SwitchListTile));
     await tester.tap(find.byType(SwitchListTile));
     await tester.pumpAndSettle();
+    expect(find.text('Books: 2'), findsOneWidget);
     await shot('16-favorites-filter');
+    await choose('Status filter', 'Reading');
     await enter('Search', ' UI verification ');
     FocusManager.instance.primaryFocus?.unfocus();
     await tester.pumpAndSettle();

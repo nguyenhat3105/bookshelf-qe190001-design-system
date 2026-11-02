@@ -16,6 +16,8 @@ items = [
     ('firebase-auth', 'Firebase console — Authentication', 'The Users list includes the dedicated grader account.'),
     ('firebase-data', 'Firebase console — Firestore data', 'The books collection contains five sample books belonging to the grader account.'),
     ('firebase-rules', 'Firebase console — Security Rules', 'The published rules restrict access by owner and validate canonical book IDs and field values.'),
+    ('firebase-rules-access', 'Firebase console Security Rules access controls', 'The active rules allow signed-in users to read and change only their own books and validate every saved document.'),
+    ('firebase-rules-published', 'Firebase console published Rules version', 'The starred version is the active Rules release published for this project.'),
     ('01-home', 'Home screen', 'The public Home screen shows BookShelf, Login, Register and the feature cards.'),
     ('01b-home-features', 'Home screen feature cards', 'Three feature cards describe tracking books, reading status and favorites.'),
     ('02-register-validation', 'Register screen — validation', 'Submitting the empty registration form shows the required-field messages.'),
