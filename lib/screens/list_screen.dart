@@ -55,10 +55,7 @@ class _ListScreenState extends State<ListScreen> {
     child: DropdownButtonFormField<String>(
       key: ValueKey('$label-$selected'),
       initialValue: selected,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(fontSize: 0),
-      ),
+      decoration: InputDecoration(),
       isExpanded: true,
       icon: const Icon(Icons.keyboard_arrow_down_rounded),
       items: [
@@ -148,10 +145,9 @@ class _ListScreenState extends State<ListScreen> {
                       FieldLabel(
                         'Search',
                         child: TextField(
+                          key: const ValueKey('Search'),
                           controller: search,
                           decoration: const InputDecoration(
-                            labelText: 'Search',
-                            labelStyle: TextStyle(fontSize: 0),
                             hintText: 'Search by title or author',
                             prefixIcon: Icon(Icons.search, size: 20),
                           ),

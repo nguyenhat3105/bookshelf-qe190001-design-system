@@ -68,9 +68,10 @@ void main() {
     Future<void> enter(String label, String value) async {
       FocusManager.instance.primaryFocus?.unfocus();
       await tester.pumpAndSettle();
-      final target = find.byWidgetPredicate(
-        (w) => w is TextField && w.decoration?.labelText == label,
-      );
+      final field = find.byKey(ValueKey(label));
+      final target = label == 'Search'
+          ? field
+          : find.descendant(of: field, matching: find.byType(TextField));
       await tester.ensureVisible(target);
       await tester.enterText(target, value);
       await tester.pumpAndSettle();
@@ -91,7 +92,7 @@ void main() {
       final target = find.byWidgetPredicate(
         (w) =>
             w is DropdownButtonFormField<String> &&
-            w.decoration.labelText == label,
+            w.key.toString().contains('$label-'),
       );
       await tester.ensureVisible(target);
       await tester.tap(target);
@@ -102,6 +103,8 @@ void main() {
 
     await waitFor(find.text('Track your books'));
     await shot('01-home');
+    await tester.ensureVisible(find.text('Rate your favorites'));
+    await shot('01b-home-features');
     await tapText('Register');
     await tapText('Register');
     await waitFor(find.text('Email is required'));
@@ -179,11 +182,7 @@ void main() {
     FocusManager.instance.primaryFocus?.unfocus();
     await tester.pumpAndSettle();
     await Scrollable.ensureVisible(
-      tester.element(
-        find.byWidgetPredicate(
-          (w) => w is TextField && w.decoration?.labelText == 'Search',
-        ),
-      ),
+      tester.element(find.byKey(const ValueKey('Search'))),
     );
     await shot('17-search');
     await tapText('Clear');
@@ -194,7 +193,7 @@ void main() {
     await tester.pumpAndSettle();
     await tapText('Delete');
     await shot('19-delete-confirmation');
-    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete').last);
     await waitFor(find.text('Your bookshelf'));
     await tester.ensureVisible(find.text('Books: 5'));
     await tester.pumpAndSettle();

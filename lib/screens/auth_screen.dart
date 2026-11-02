@@ -98,11 +98,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       FieldLabel(
                         'Email',
                         child: TextFormField(
+                          key: const ValueKey('Email'),
                           controller: email,
                           enabled: !busy,
                           decoration: const InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: TextStyle(fontSize: 0),
                             hintText: 'Enter your email',
                           ),
                           keyboardType: TextInputType.emailAddress,
@@ -114,12 +113,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       FieldLabel(
                         'Password',
                         child: TextFormField(
+                          key: const ValueKey('Password'),
                           controller: password,
                           enabled: !busy,
                           obscureText: hidePassword,
                           decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: const TextStyle(fontSize: 0),
                             hintText: 'Enter your password',
                             suffixIcon: IconButton(
                               tooltip: hidePassword
@@ -146,12 +144,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         FieldLabel(
                           'Confirm password',
                           child: TextFormField(
+                            key: const ValueKey('Confirm password'),
                             controller: confirm,
                             enabled: !busy,
                             obscureText: hideConfirm,
                             decoration: InputDecoration(
-                              labelText: 'Confirm password',
-                              labelStyle: const TextStyle(fontSize: 0),
                               hintText: 'Re-enter your password',
                               suffixIcon: IconButton(
                                 tooltip: hideConfirm

@@ -4,16 +4,20 @@ from pathlib import Path
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
 
 root = Path(__file__).resolve().parents[1]
 screens = root / 'artifacts' / 'screenshots'
-output = root.parent / 'submission' / 'QE190001.docx'
+output = root.parent / 'submission-QE190001' / 'QE190001.docx'
 credentials = json.loads((root / 'test-account.local.json').read_text(encoding='utf-8'))
 items = [
     ('firebase-auth', 'Firebase console — Authentication', 'The Users list includes the dedicated grader account.'),
     ('firebase-data', 'Firebase console — Firestore data', 'The books collection contains five sample books belonging to the grader account.'),
     ('firebase-rules', 'Firebase console — Security Rules', 'The published rules restrict access by owner and validate canonical book IDs and field values.'),
     ('01-home', 'Home screen', 'The public Home screen shows BookShelf, Login, Register and the feature cards.'),
+    ('01b-home-features', 'Home screen feature cards', 'Three feature cards describe tracking books, reading status and favorites.'),
     ('02-register-validation', 'Register screen — validation', 'Submitting the empty registration form shows the required-field messages.'),
     ('03-register-success', 'Register screen — success', 'A real Firebase account was created and Registration successful is displayed.'),
     ('05-login', 'Login screen', 'The empty sign-in form.'),
@@ -51,6 +55,15 @@ for name in ['Normal', 'Title', 'Heading 1', 'Heading 2']:
 doc.styles['Normal'].paragraph_format.space_after = Pt(10)
 
 # Keep the exact field names and order required by the exam template.
+doc.add_paragraph('BookShelf Submission Information', style='Title')
+for border in list(doc.styles['Title'].element.iter(qn('w:pBdr'))):
+    border.getparent().remove(border)
+table = doc.add_table(rows=1, cols=2)
+table.autofit = False
+table.columns[0].width = Inches(2.05)
+table.columns[1].width = Inches(4.92)
+table.cell(0,0).text = 'Field'
+table.cell(0,1).text = 'Information'
 for line in [
     'Student Code: QE190001',
     'Full Name: Nguyễn Ngọc Như Ngân',
@@ -60,7 +73,41 @@ for line in [
     f'Test account email: {credentials["email"]}',
     f'Test account password: {credentials["password"]}',
 ]:
-    doc.add_paragraph(line)
+    label, value = line.split(': ',1)
+    cells = table.add_row().cells
+    cells[0].text = label
+    cells[1].text = value
+
+for i,row in enumerate(table.rows):
+    row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'))
+    for j,cell in enumerate(row.cells):
+        cell.width = Inches(2.05 if j == 0 else 4.92)
+        cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+        pr = cell._tc.get_or_add_tcPr()
+        shade = OxmlElement('w:shd')
+        shade.set(qn('w:fill'), '244B60' if i == 0 else ('F2F5F7' if i % 2 else 'FFFFFF'))
+        pr.append(shade)
+        margins=OxmlElement('w:tcMar')
+        for side in ['top','bottom','left','right']:
+            node=OxmlElement('w:'+side)
+            node.set(qn('w:w'),'150')
+            node.set(qn('w:type'),'dxa')
+            margins.append(node)
+        pr.append(margins)
+        for p in cell.paragraphs:
+            p.paragraph_format.space_after=Pt(0)
+            p.paragraph_format.line_spacing=1.1
+            for run in p.runs:
+                run.font.size=Pt(10.5)
+                run.bold=i==0 or j==0
+                run.font.color.rgb=RGBColor.from_string('FFFFFF' if i==0 else '000000')
+borders=OxmlElement('w:tblBorders')
+for edge in ['top','bottom','left','right','insideH','insideV']:
+    node=OxmlElement('w:'+edge)
+    for key,value in [('val','single'),('sz','6'),('color','D9D9D9')]:
+        node.set(qn('w:'+key),value)
+    borders.append(node)
+table._tbl.tblPr.append(borders)
 
 for name, caption, explanation in items:
     doc.add_page_break()

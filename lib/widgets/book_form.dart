@@ -95,10 +95,7 @@ class _BookFormState extends State<BookForm> {
     key: ValueKey('$label-$value'),
     initialValue: value,
     isExpanded: true,
-    decoration: InputDecoration(
-      labelText: label,
-      labelStyle: const TextStyle(fontSize: 0),
-    ),
+    decoration: const InputDecoration(),
     icon: const Icon(Icons.keyboard_arrow_down_rounded),
     hint: Text(hint),
     items: [
@@ -122,13 +119,10 @@ class _BookFormState extends State<BookForm> {
         FieldLabel(
           'Title',
           child: TextFormField(
+            key: const ValueKey('Title'),
             controller: title,
             enabled: !busy,
-            decoration: const InputDecoration(
-              labelText: 'Title',
-              labelStyle: TextStyle(fontSize: 0),
-              hintText: 'Enter book title',
-            ),
+            decoration: const InputDecoration(hintText: 'Enter book title'),
             validator: Validators.title,
           ),
         ),
@@ -136,13 +130,10 @@ class _BookFormState extends State<BookForm> {
         FieldLabel(
           'Author',
           child: TextFormField(
+            key: const ValueKey('Author'),
             controller: author,
             enabled: !busy,
-            decoration: const InputDecoration(
-              labelText: 'Author',
-              labelStyle: TextStyle(fontSize: 0),
-              hintText: 'Enter author name',
-            ),
+            decoration: const InputDecoration(hintText: 'Enter author name'),
             validator: Validators.author,
           ),
         ),
@@ -172,11 +163,10 @@ class _BookFormState extends State<BookForm> {
         FieldLabel(
           'Rating',
           child: TextFormField(
+            key: const ValueKey('Rating'),
             controller: rating,
             enabled: !busy,
             decoration: const InputDecoration(
-              labelText: 'Rating',
-              labelStyle: TextStyle(fontSize: 0),
               hintText: '0 to 5',
               helperText: 'Optional · whole number from 0 to 5',
             ),
@@ -191,11 +181,10 @@ class _BookFormState extends State<BookForm> {
         FieldLabel(
           'Notes',
           child: TextFormField(
+            key: const ValueKey('Notes'),
             controller: notes,
             enabled: !busy,
             decoration: const InputDecoration(
-              labelText: 'Notes',
-              labelStyle: TextStyle(fontSize: 0),
               hintText: 'Your thoughts on this book',
               helperText: 'Optional · at most 300 characters',
             ),
