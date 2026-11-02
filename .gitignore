@@ -8,6 +8,7 @@ node_modules/
 artifacts/
 submission/
 *.jks
+android/.kotlin/
 *.keystore
 key.properties
 test-account.local.json

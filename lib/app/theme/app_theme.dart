@@ -119,7 +119,7 @@ ThemeData buildAppTheme() {
       focusedBorder: border(AppColors.primary600),
       errorBorder: border(AppColors.error),
       focusedErrorBorder: border(AppColors.error),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       hintStyle: const TextStyle(color: AppColors.muted, fontSize: 14),
       errorStyle: const TextStyle(fontSize: 12, color: AppColors.error),
       errorMaxLines: 3,
