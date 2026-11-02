@@ -12,7 +12,7 @@ class FieldLabel extends StatelessWidget {
     children: [
       Text(text, style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(height: 8),
-      child,
+      Semantics(label: text, child: child),
     ],
   );
 }

@@ -35,6 +35,7 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   Future<void> logout() async {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     setState(() => loggingOut = true);
     try {
       await FirebaseAuth.instance.signOut();
